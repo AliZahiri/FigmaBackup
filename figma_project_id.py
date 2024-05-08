@@ -7,14 +7,18 @@ import hashlib
 from datetime import datetime, timedelta
 import logging
 
+# Setup logging configuration
 def setup_logging():
+    # Configure logging to file
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S',
                         filename='backup.log',
                         filemode='a')
+
+    # Configure logging to console
     console = logging.StreamHandler()
-    console.setLevel(logging.DEBUG)
+    console.setLevel(logging.DEBUG) # Set this to DEBUG to see all messages
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     console.setFormatter(formatter)
     logging.getLogger('').addHandler(console)
@@ -63,12 +67,15 @@ def cleanup_old_backups(backup_dir, retention_days=7):
 
 def main():
     setup_logging()
+    logging.info("Script started successfully.")
     try:
         sheet_url = "your_public_google_sheet_csv_url"
         email = "your_email_here"
         password = "your_password_here"
         access_token = "your_figma_access_token"
         backup_dir = "path_to_your_backup_directory"
+        hash_file_path = "path_to_your_hash_store.json"
+
 
         # Fetch project IDs from CSV
         csv_data = fetch_csv_data(sheet_url)
@@ -86,3 +93,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
